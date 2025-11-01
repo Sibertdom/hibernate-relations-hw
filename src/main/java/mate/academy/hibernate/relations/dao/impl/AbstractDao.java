@@ -12,7 +12,7 @@ public abstract class AbstractDao {
     protected AbstractDao(SessionFactory sessionFactory) {
         this.factory = sessionFactory;
     }
-    
+
     public <T> T add(T entity) {
         Transaction transaction = null;
         try (Session session = factory.openSession()) {
