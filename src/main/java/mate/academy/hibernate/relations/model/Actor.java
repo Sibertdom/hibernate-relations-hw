@@ -20,7 +20,7 @@ public class Actor implements Cloneable {
     private String name;
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "country_id")
     private Country country;
 
@@ -40,10 +40,6 @@ public class Actor implements Cloneable {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

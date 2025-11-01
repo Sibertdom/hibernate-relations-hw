@@ -27,7 +27,7 @@ public class Movie implements Cloneable {
     @JoinColumn(name = "country_id")
     private Country country;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "movies_actors",
             joinColumns = @JoinColumn(name = "movie_id"),
@@ -46,10 +46,6 @@ public class Movie implements Cloneable {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {

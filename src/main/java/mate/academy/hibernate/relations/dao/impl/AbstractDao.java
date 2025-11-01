@@ -15,7 +15,9 @@ public abstract class AbstractDao {
 
     public <T> T add(T entity) {
         Transaction transaction = null;
-        try (Session session = factory.openSession()) {
+        Session session = null;
+        try {
+            session = factory.openSession();
             transaction = session.beginTransaction();
             session.save(entity);
             transaction.commit();
@@ -26,6 +28,10 @@ public abstract class AbstractDao {
             }
             throw new DataProcessingException("Can't insert " + entity.getClass().getSimpleName()
                     + " " + entity, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
