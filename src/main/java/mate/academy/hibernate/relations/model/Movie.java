@@ -101,7 +101,7 @@ public class Movie implements Cloneable {
         return "Movie{"
                 + "id=" + id
                 + ", title='" + title + '\''
-                + ", country=" + (country != null ? "Country proxy" : "null")
+                + ", country=" + (country != null ? country.getName() : "null")
                 + ", actors=" + actors.size() + " total"
                 + '}';
     }
