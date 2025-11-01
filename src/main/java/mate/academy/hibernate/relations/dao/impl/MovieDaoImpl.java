@@ -20,10 +20,14 @@ public class MovieDaoImpl extends AbstractDao implements MovieDao {
 
     @Override
     public Optional<Movie> get(Long id) {
-
+        // ✅
         try (Session session = factory.openSession()) {
             Query<Movie> query = session.createQuery(
-                    "FROM Movie m WHERE m.id = :id", Movie.class
+                    "SELECT DISTINCT m FROM Movie m "
+                            + "LEFT JOIN FETCH m.country c "
+                            + "LEFT JOIN FETCH m.actors a "
+                            + "LEFT JOIN FETCH a.country ac "
+                            + "WHERE m.id = :id", Movie.class
             );
             query.setParameter("id", id);
             return query.uniqueResultOptional();
