@@ -12,12 +12,10 @@ public abstract class AbstractDao {
     protected AbstractDao(SessionFactory sessionFactory) {
         this.factory = sessionFactory;
     }
-
+    
     public <T> T add(T entity) {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = factory.openSession();
+        try (Session session = factory.openSession()) {
             transaction = session.beginTransaction();
             session.save(entity);
             transaction.commit();
@@ -26,13 +24,8 @@ public abstract class AbstractDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-
             throw new DataProcessingException("Can't insert " + entity.getClass().getSimpleName()
                     + " " + entity, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 

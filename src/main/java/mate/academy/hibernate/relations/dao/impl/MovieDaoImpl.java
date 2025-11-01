@@ -22,9 +22,8 @@ public class MovieDaoImpl extends AbstractDao implements MovieDao {
     public Optional<Movie> get(Long id) {
         try (Session session = factory.openSession()) {
             Query<Movie> query = session.createQuery(
-                    "SELECT DISTINCT m FROM Movie m "
+                    "SELECT m FROM Movie m "
                             + "JOIN FETCH m.country c "
-                            + "LEFT JOIN FETCH m.actors a "
                             + "WHERE m.id = :id", Movie.class
             );
             query.setParameter("id", id);
