@@ -41,7 +41,7 @@ public class Main {
 
         Actor dwayneJohnson = new Actor("Dwayne", "Johnson");
         dwayneJohnson.setCountry(usa);
-        actorService.add(dwayneJohnson); // Тут usa вже не буде збережено, оскільки вона Persistent
+        actorService.add(dwayneJohnson);
 
         Movie hobbsAndShaw = new Movie("Hobbs & Shaw");
         hobbsAndShaw.setCountry(usa);

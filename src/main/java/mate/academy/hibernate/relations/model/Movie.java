@@ -101,7 +101,6 @@ public class Movie implements Cloneable {
         return "Movie{"
                 + "id=" + id
                 + ", title='" + title + '\''
-                // Тут просто відображаємо посилання на об'єкт Country, щоб уникнути його завантаження
                 + ", country=" + (country != null ? "Country proxy" : "null")
                 + ", actors=" + actors.size() + " total"
                 + '}';

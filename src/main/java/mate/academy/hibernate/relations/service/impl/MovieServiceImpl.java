@@ -1,6 +1,6 @@
 package mate.academy.hibernate.relations.service.impl;
 
-import mate.academy.hibernate.relations.dao.MovieDao; // Припустимо, що MovieDao існує
+import mate.academy.hibernate.relations.dao.MovieDao;
 import mate.academy.hibernate.relations.model.Movie;
 import mate.academy.hibernate.relations.service.MovieService;
 

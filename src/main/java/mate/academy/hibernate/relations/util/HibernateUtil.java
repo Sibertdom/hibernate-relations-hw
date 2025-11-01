@@ -7,16 +7,13 @@ import org.hibernate.cfg.Configuration;
 public class HibernateUtil {
     private static final SessionFactory sessionFactory = initSessionFactory();
 
-    // Приватний конструктор для запобігання створенню об'єктів
     private HibernateUtil() {
     }
 
     private static SessionFactory initSessionFactory() {
         try {
-            // Створення SessionFactory на основі конфігураційного файлу hibernate.cfg.xml
             return new Configuration().configure().buildSessionFactory();
         } catch (Exception e) {
-            // ВИПРАВЛЕННЯ: Кидаємо користувацький unchecked виняток
             throw new DataProcessingException("Error creating SessionFactory", e);
         }
     }
