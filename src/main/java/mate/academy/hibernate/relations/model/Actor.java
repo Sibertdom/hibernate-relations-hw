@@ -1,15 +1,41 @@
 package mate.academy.hibernate.relations.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+
+@Entity
+@Table(name = "actors")
 public class Actor implements Cloneable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String lastName;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "country_id")
     private Country country;
 
     public Actor() {
     }
 
-    public Actor(String name) {
+    public Actor(String name, String lastName) {
         this.name = name;
+        this.lastName = lastName;
+    }
+
+    public Actor(String fullName) {
+        String[] parts = fullName.split(" ", 2);
+        this.name = parts.length > 0 ? parts[0] : "";
+        this.lastName = parts.length > 1 ? parts[1] : "";
     }
 
     public Long getId() {
@@ -28,6 +54,14 @@ public class Actor implements Cloneable {
         this.name = name;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public Country getCountry() {
         return country;
     }
@@ -40,6 +74,7 @@ public class Actor implements Cloneable {
     public Actor clone() {
         try {
             Actor actor = (Actor) super.clone();
+            // Важливо: переконайтеся, що Country також реалізує Cloneable
             if (country != null) {
                 actor.setCountry(country.clone());
             }
@@ -54,7 +89,8 @@ public class Actor implements Cloneable {
         return "Actor{"
                 + "id=" + id
                 + ", name='" + name + '\''
-                + ", country='" + country + '\''
+                + ", lastName='" + lastName + '\''
+                + ", country=" + (country != null ? country.getName() : "null")
                 + '}';
     }
 }
