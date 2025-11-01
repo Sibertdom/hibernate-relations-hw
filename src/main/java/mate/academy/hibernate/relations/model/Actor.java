@@ -74,7 +74,6 @@ public class Actor implements Cloneable {
     public Actor clone() {
         try {
             Actor actor = (Actor) super.clone();
-            // Важливо: переконайтеся, що Country також реалізує Cloneable
             if (country != null) {
                 actor.setCountry(country.clone());
             }

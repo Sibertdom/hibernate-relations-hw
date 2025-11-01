@@ -20,9 +20,9 @@ public class Main {
     public static void main(String[] args) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-        CountryDaoImpl countryDao = new CountryDaoImpl(sessionFactory);
-        ActorDaoImpl actorDao = new ActorDaoImpl(sessionFactory);
-        MovieDaoImpl movieDao = new MovieDaoImpl(sessionFactory);
+        final CountryDaoImpl countryDao = new CountryDaoImpl(sessionFactory);
+        final ActorDaoImpl actorDao = new ActorDaoImpl(sessionFactory);
+        final MovieDaoImpl movieDao = new MovieDaoImpl(sessionFactory);
 
         CountryService countryService = new CountryServiceImpl(countryDao);
         ActorService actorService = new ActorServiceImpl(actorDao);
@@ -48,8 +48,10 @@ public class Main {
         hobbsAndShaw.setActors(List.of(vinDiesel, dwayneJohnson));
         movieService.add(hobbsAndShaw);
 
-        System.out.println("Отриманий фільм (Fast and Furious): " + movieService.get(fastAndFurious.getId()));
-        System.out.println("Отриманий фільм (Hobbs & Shaw): " + movieService.get(hobbsAndShaw.getId()));
+        System.out.println("Отриманий фільм (Fast and Furious): "
+                + movieService.get(fastAndFurious.getId()));
+        System.out.println("Отриманий фільм (Hobbs & Shaw): "
+                + movieService.get(hobbsAndShaw.getId()));
 
         HibernateUtil.shutdown();
     }
