@@ -18,15 +18,15 @@ import org.hibernate.SessionFactory;
 
 public class Main {
     public static void main(String[] args) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
         final CountryDaoImpl countryDao = new CountryDaoImpl(sessionFactory);
         final ActorDaoImpl actorDao = new ActorDaoImpl(sessionFactory);
         final MovieDaoImpl movieDao = new MovieDaoImpl(sessionFactory);
 
-        CountryService countryService = new CountryServiceImpl(countryDao);
-        ActorService actorService = new ActorServiceImpl(actorDao);
-        MovieService movieService = new MovieServiceImpl(movieDao);
+        final CountryService countryService = new CountryServiceImpl(countryDao);
+        final ActorService actorService = new ActorServiceImpl(actorDao);
+        final MovieService movieService = new MovieServiceImpl(movieDao);
 
         Country usa = new Country("USA");
 
