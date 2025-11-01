@@ -33,8 +33,10 @@ public class MovieDaoImplTest extends AbstractTest {
     public void getById_Ok() {
         MovieDao movieDao = new MovieDaoImpl(getSessionFactory());
         verifyCreateMovieWorks(movieDao, shawshankRedemption.clone(), 1L);
+
         Optional<Movie> actualOptional = movieDao.get(1L);
-        Assert.assertTrue(actualOptional.isPresent());
+
+        Assert.assertTrue(actualOptional.isPresent()); // 👈 Рядок 37 (AssertionError тут)
         Movie actual = actualOptional.get();
         Assert.assertNotNull(actual);
         Assert.assertEquals(1L, actual.getId().longValue());
@@ -52,7 +54,8 @@ public class MovieDaoImplTest extends AbstractTest {
         shawshankRedemptionWithActor.setActors(List.of(morganFreemanClone));
         verifyCreateMovieWorks(movieDao, shawshankRedemptionWithActor, 1L);
 
-        Optional<Movie> actualOptional = getMovieById(1L);
+        // ✅ ВИКОРИСТОВУЄМО movieDao.get(id) замість допоміжного методу getMovieById(1L)
+        Optional<Movie> actualOptional = movieDao.get(1L);
         Assert.assertTrue(actualOptional.isPresent());
         Movie actual = actualOptional.get();
         Assert.assertNotNull(actual);
@@ -79,7 +82,8 @@ public class MovieDaoImplTest extends AbstractTest {
         shawshankRedemptionWithActor.setActors(List.of(morganFreemanClone));
         verifyCreateMovieWorks(movieDao, shawshankRedemptionWithActor, 1L);
 
-        Optional<Movie> actualOptional = getMovieById(1L);
+        Optional<Movie> actualOptional = movieDao.get(1L);
+
         Assert.assertTrue(actualOptional.isPresent());
         Movie actual = actualOptional.get();
         Assert.assertNotNull(actual);
@@ -90,7 +94,7 @@ public class MovieDaoImplTest extends AbstractTest {
         Assert.assertEquals(morganFreeman.getName(), actual.getActors().get(0).getName());
         Assert.assertNotNull(actual.getActors().get(0).getCountry());
         Assert.assertEquals(1, actual.getActors().get(0).getCountry().getId().longValue());
-        Assert.assertEquals(usa.getName(), actual.getActors().get(0).getCountry().getName());
+        Assert.assertEquals(usa.getName(), actual.getActors().get(0).getCountry().getName()); // 👈 Рядок 93 (L.I.E. тут)
     }
 
     @Test
@@ -109,15 +113,4 @@ public class MovieDaoImplTest extends AbstractTest {
         Assert.assertEquals(movie.getTitle(), actual.getTitle());
     }
 
-    private Optional<Movie> getMovieById(Long id) {
-        try (Session session = getSessionFactory().openSession()) {
-            return session.createQuery("FROM Movie m "
-                            + "LEFT JOIN FETCH m.actors "
-                            + "WHERE m.id = :id", Movie.class)
-                    .setParameter("id", id)
-                    .uniqueResultOptional();
-        } catch (Exception e) {
-            throw new RuntimeException("Can't get a movie by id: " + id, e);
-        }
-    }
 }
