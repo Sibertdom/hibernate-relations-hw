@@ -11,7 +11,7 @@ public class CountryDaoImpl extends AbstractDao implements CountryDao {
     }
 
     @Override
-    public Country add(Country country) {
+    public Country create(Country country) {
         return null;
     }
 

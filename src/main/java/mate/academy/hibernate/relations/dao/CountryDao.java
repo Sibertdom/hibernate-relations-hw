@@ -4,7 +4,7 @@ import java.util.Optional;
 import mate.academy.hibernate.relations.model.Country;
 
 public interface CountryDao {
-    Country add(Country country);
+    Country create(Country country);
 
     Optional<Country> get(Long id);
 }
